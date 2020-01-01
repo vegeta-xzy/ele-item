@@ -1,0 +1,142 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>ele-item-base</artifactId>
+	<parent>
+		<groupId>com.ele.item</groupId>
+		<artifactId>ele-item</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.ele.item</groupId>
+			<artifactId>ele-item-database</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.ele.item.base.EleaseApplication</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<!--环境切换  -->
+		<!-- <profile>
+			<id>dev</id>
+			<properties>
+				<profiles.active>dev</profiles.active>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>指定生效的profile
+			</activation>
+		</profile>
+		<profile>
+			<id>sit</id>
+			<properties>
+				<profiles.active>sit</profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<properties>
+				<profiles.active>pro</profiles.active>
+			</properties>
+		</profile> -->
+		
+		<profile>
+			<!-- 拷贝database服务的资源文件 -->
+			<id>copy-database-resources</id>
+			<!-- 默认激活本profile -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<!-- 在default生命周期的 validate阶段就执行resources插件的copy-resources目标 -->
+								<phase>compile</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<!-- 指定resources插件处理资源文件到哪个目录下 -->
+									<!--<outputDirectory>src/main/resources</outputDirectory> -->
+									<outputDirectory>target/classes</outputDirectory>
+									<!--<outputDirectory>${project.build.outputDirectory}</outputDirectory> -->
+									
+									<!-- 待处理的资源定义 -->
+									<resources>
+										<resource>
+											<!-- 指定resources插件处理哪个目录下的资源文件 -->
+											<directory>
+												../ele-item-common-config/src/main/resources
+											</directory>
+											<!-- 指定需要处理的资源 -->
+											<includes>
+												<include>
+													${spring.profiles.include}/*.yml
+												</include>
+												<include>
+													${spring.profiles.include}/*.properties
+												</include>
+											</includes>
+											
+											<filtering>false</filtering>
+										</resource>
+										
+										<resource>
+											<!-- 指定resources插件处理哪个目录下的资源文件 -->
+											<directory>
+												../ele-item-database/src/main/resources/config-das
+											</directory>
+											<!-- 指定需要处理的资源 -->
+											<includes>
+												<include>
+													mapper/base/*.xml
+												</include>
+											</includes>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+
+
+
+</project>

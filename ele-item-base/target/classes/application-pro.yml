@@ -1,0 +1,15 @@
+server:
+  port: 101001
+  servlet:
+    context-path: /dev-base
+spring:
+  application:
+    name: ele-item-base
+swagger: 
+  enabled: false
+#日志#
+logging: 
+  config:  classpath:logback-spring.xml
+  path: /app/logs/ele/item/base/dev/
+  level:
+    root: info

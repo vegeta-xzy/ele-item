@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ele.item</groupId>
+	<artifactId>ele-item</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>ele-item-database</module>
+		<module>ele-item-common-config</module>
+		<module>ele-item-base</module>
+		<module>ele-item-euerka</module>
+	</modules>
+
+	<properties>
+		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
+		<jdk.version>1.8</jdk.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- mybatis dao -->
+		<mybati.springBoot.version>1.3.2</mybati.springBoot.version>
+		<mysql.version>5.1.47</mysql.version>
+		<druid.version>1.1.3</druid.version>
+		<pagehelper.version>5.1.6</pagehelper.version>
+		<pagehelper.spring.boot.version>1.2.5</pagehelper.spring.boot.version>
+		<!-- mybatis end -->
+		<redis.spring.boot.version>2.0.6.RELEASE</redis.spring.boot.version>
+		<jedis.version>2.9.3</jedis.version>
+		<jackson.version.annotations>2.9.0</jackson.version.annotations>
+		<commons-pool2.version>2.6.0</commons-pool2.version>
+		<commons-codec.version>1.9</commons-codec.version>
+		<lombok.version>1.18.6</lombok.version>
+		<swagger.version>2.9.2</swagger.version>
+		<gson.version>2.8.5</gson.version>
+		<jjwt.version>0.9.1</jjwt.version>
+	</properties>
+
+	<!--springBoot springBoot 版本2.0以上 对应 springCloud Finchley版本 -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.5.RELEASE</version>
+	</parent>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!--mybatis starter -->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybati.springBoot.version}</version>
+			</dependency>
+			<!--Mysql数据库驱动 -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<!--数据源池 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<!-- 分页助手 -->
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper</artifactId>
+				<version>${pagehelper.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper-spring-boot-starter</artifactId>
+				<version>${pagehelper.spring.boot.version}</version>
+			</dependency>
+			<!-- redis -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-redis</artifactId>
+				<version>${redis.spring.boot.version}</version>
+			</dependency>
+			<dependency>
+	            <groupId>redis.clients</groupId>
+	            <artifactId>jedis</artifactId>
+	            <version>${jedis.version}</version>
+	        </dependency>
+	        <dependency>        
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-annotations</artifactId>
+			    <version>${jackson.version.annotations}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-pool2</artifactId>
+				<version>${commons-pool2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons-codec.version}</version>
+			</dependency>
+			<!--lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<optional>true</optional>
+			</dependency>
+			<!-- Swagger核心包 start -->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			
+			<!--goole GSON  -->
+			<dependency>
+			    <groupId>com.google.code.gson</groupId>
+			    <artifactId>gson</artifactId>
+			    <version>${gson.version}</version>
+			</dependency>
+			<!--jwt  -->
+			<dependency>
+			    <groupId>io.jsonwebtoken</groupId>
+			    <artifactId>jjwt</artifactId>
+			    <version>${jjwt.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<!--环境切换  -->
+	<!-- <profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<profiles.active>dev</profiles.active>
+			</properties>
+			<activation>
+                <activeByDefault>true</activeByDefault>指定生效的profile
+            </activation>
+		</profile>
+		<profile>
+			<id>sit</id>
+			<properties>
+				<profiles.active>sit</profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<properties>
+				<profiles.active>pro</profiles.active>
+			</properties>
+		</profile>
+	</profiles> -->
+	
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- <plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin> -->
+		</plugins>
+	</build>
+	
+
+
+</project>

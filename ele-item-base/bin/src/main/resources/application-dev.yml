@@ -1,0 +1,9 @@
+server:
+  port: 10001
+  servlet:
+    context-path: /dev-base
+spring:
+  application:
+    name: ele-item-base
+swagger: 
+  enabled: true

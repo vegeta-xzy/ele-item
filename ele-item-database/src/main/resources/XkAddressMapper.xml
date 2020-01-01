@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xika.mapper.xika.XkAddressMapper">
+
+	<select id="queryAreaList" parameterType="com.xika.util.Page" resultType="com.xika.model.XkArea">
+		select id,parentId,areaName,areaLevel from area
+		<where>
+			<if test="obj==null or obj.parentId==null">
+				parentId = 0
+			</if>
+			<if test="obj!=null and obj.parentId!=null">
+				parentId = #{obj.parentId}
+			</if>
+		</where>	
+		order by parentId ASC 
+		<!-- limit #{beginNum},#{takeNum} -->
+	</select>
+	
+	<select id="queryAreaCount" parameterType="com.xika.util.Page" resultType="java.lang.Long">
+		select count(id) from area
+		<where>
+			<if test="obj==null or obj.parentId==null">
+				parentId = 0
+			</if>
+			<if test="obj!=null and obj.parentId!=null">
+				parentId = #{obj.parentId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryAddressSonCount" resultType="java.lang.Integer">
+		select count(id) from area
+		where parentId = #{parentId}
+	</select>
+	
+	<select id="queryMakeAddressCount" resultType="java.lang.Long">
+		select count(id) from MakeAddress
+		<where>
+			<if test="obj!=null and obj.memberNo!=null">
+				memberNo like "%"#{obj.memberNo}"%"
+			</if>
+		</where>
+	</select>
+	
+	<select id="queryMakeAddressList" resultType="com.xika.model.XkMakeAddress">
+		select id,
+			memberNo,
+			makeAddress,
+			makePro,
+			makeCity,
+			makeArea,
+			makeMan,
+			makeCode,
+			makeTel,
+			createTime,
+			updateTime,
+			isDefaultAddress
+		from MakeAddress
+		<where>
+			<if test="obj!=null and obj.memberNo!=null">
+				memberNo like "%"#{obj.memberNo}"%"
+			</if>
+		</where>
+		order by updateTime DESC limit #{beginNum},#{takeNum}
+	</select>
+	
+	
+</mapper>
